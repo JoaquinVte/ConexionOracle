@@ -63,6 +63,11 @@ public class FormularioPrincipal extends JFrame {
 		menuBar.add(mnArchivo);
 
 		JMenuItem mISalir = new JMenuItem("Salir");
+		mISalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		mnArchivo.add(mISalir);
 
 		JMenu mnEditar = new JMenu("Editar");
@@ -77,6 +82,18 @@ public class FormularioPrincipal extends JFrame {
 			}
 		});
 		mnEditar.add(mIPreferencias);
+		
+		JMenu mnAyuda = new JMenu("Ayuda");
+		menuBar.add(mnAyuda);
+		
+		JMenuItem mntmAcercaDe = new JMenuItem("Acerca de");
+		mntmAcercaDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Ayuda a = new Ayuda();
+				a.setVisible(true);
+			}
+		});
+		mnAyuda.add(mntmAcercaDe);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

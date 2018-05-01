@@ -1,0 +1,80 @@
+package javaOracle;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import java.awt.GridLayout;
+import javax.swing.SwingConstants;
+import javax.swing.SpringLayout;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JTextPane;
+import java.awt.Color;
+import javax.swing.UIManager;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Ayuda extends JFrame {
+
+	private JPanel contentPane;
+
+	
+	/**
+	 * Create the frame.
+	 */
+	public Ayuda() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 369, 348);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new MigLayout("", "[358px]", "[80px][][][][][grow][][][]"));
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setIcon(new ImageIcon("/home/joaalsai/workspace/Oracle/src/images/logo_compacto.png"));
+		contentPane.add(lblNewLabel, "cell 0 0,grow");
+		
+		JLabel lblIesLaVereda = new JLabel("IES La Vereda");
+		lblIesLaVereda.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblIesLaVereda, "cell 0 1,alignx center,aligny center");
+		
+		JLabel lblJoaquinVicenteAlonso = new JLabel("Joaquin Vicente Alonso Saiz");
+		contentPane.add(lblJoaquinVicenteAlonso, "cell 0 3,alignx center");
+		
+		JLabel lblCurso = new JLabel("Curso 2017 / 2018");
+		contentPane.add(lblCurso, "cell 0 4,alignx center");
+		
+		JTextPane txtpnOasdfsd = new JTextPane();
+		txtpnOasdfsd.setFont(new Font("Dialog", Font.PLAIN, 13));
+		txtpnOasdfsd.setBackground(UIManager.getColor("Label.background"));
+		txtpnOasdfsd.setEditable(false);
+		txtpnOasdfsd.setText("Ejercicio de programacion y BBDD de 1º de DAW.\nEn este ejercicio se practica la comuncicacion con\nuna BBDD Oracle ejecutada en remoto, asi como\nla ejecucion de procedimientos almacenados y \nla manipulacion de los datos obtenidos \n(VARCHAR,NUMBER,BLOB,CURSORES,..)");
+		contentPane.add(txtpnOasdfsd, "cell 0 5,alignx center,growy");
+		
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		contentPane.add(btnAceptar, "cell 0 7,alignx center");
+	}
+}

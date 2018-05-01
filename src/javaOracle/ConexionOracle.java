@@ -10,16 +10,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-
-import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -101,13 +94,12 @@ public class ConexionOracle {
 			if (conexion != null)
 				System.out.println("Conexión realizada con éxisto a MUNDIAL");
 			else {
-//				JOptionPane.showMessageDialog(null, "Error al conectar. Revise Configuracion", "Error",
-//						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Error al conectar. Revise Configuracion", "Error",
+						JOptionPane.ERROR_MESSAGE);
 				System.out.println("Conexión fallida");
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error al conectar. Revise Configuracion", "Error",
-			JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 			//System.out.println("FALLOOOOO EXCEPCION!!!");
 			//e.printStackTrace();
 		}
