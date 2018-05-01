@@ -21,8 +21,8 @@ public class SqlTools {
 	
 	// El siguiente metodo cierra los recursos abiertos (ResultSet ,Statement ,Connection)
 	public static void close(ResultSet rs, Statement s, Connection c){
-		try { if(rs!=null) rs.close();}catch(Exception e){};
-		try { if(s!=null) s.close();}catch(Exception e){};
-		try { if(c!=null) c.close();}catch(Exception e){};		
+		try { if(rs!=null) rs.close();}catch(Exception e){e.printStackTrace();};
+		try { if(s!=null) s.close();}catch(Exception e){e.printStackTrace();};
+		try { if(c!=null) c.close();}catch(Exception e){e.printStackTrace();};		
 	}
 }

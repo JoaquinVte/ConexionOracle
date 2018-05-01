@@ -13,7 +13,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JFrame;
@@ -60,7 +60,7 @@ public class FormularioJugador extends JFrame {
 	private JRadioButton rdbtnDelantero;
 	private JComboBox comboBox_1;
 	private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo de imagen", "jpg");
-//	private Blob fotoBLOB;
+	// private Blob fotoBLOB;
 	private SerialBlob fotoBLOB;
 	private JFrame frameAnterior;
 
@@ -108,7 +108,9 @@ public class FormularioJugador extends JFrame {
 
 					int pos = 0;
 
-					// Cargamos los parametros de entrada IN (Nombre,Equipo,Direccion,Posicion habitual, Fecha nacimiento y Foto
+					// Cargamos los parametros de entrada IN
+					// (Nombre,Equipo,Direccion,Posicion habitual, Fecha
+					// nacimiento y Foto
 					cs.setString(++pos, tFNombre.getText());
 					cs.setString(++pos, (String) comboBox_1.getSelectedItem());
 					cs.setString(++pos, tFDireccion.getText());
@@ -122,23 +124,29 @@ public class FormularioJugador extends JFrame {
 					else if (rdbtnDelantero.isSelected())
 						cs.setString(++pos, "DL");
 
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");					
-					java.util.Date d;
+					java.sql.Date fecha = null;
+					try {
+						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+						java.util.Date d;
 
-					d = (java.util.Date) sdf.parse(tFFechaNacimiento.getText());
-					long milliseconds = d.getTime();
-					
-					java.sql.Date fecha = new Date(milliseconds);
+						d = (java.util.Date) sdf.parse(tFFechaNacimiento.getText());
+						long milliseconds = d.getTime();
+
+						fecha = new Date(milliseconds);
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
 
 					cs.setDate(++pos, fecha);
 
-					cs.setBytesForBlob(++pos, fotoBLOB.getBytes(1, (int) fotoBLOB.length()));
+					if(fotoBLOB!=null) {
+						cs.setBytesForBlob(++pos, fotoBLOB.getBytes(1, (int) fotoBLOB.length()));
+					}else{
+						cs.setBytesForBlob(++pos, null);
+					}
 
 					cs.execute();
-
-					GestionJugadores gj = new GestionJugadores(f);
-					gj.setVisible(true);
-					dispose();
+					JOptionPane.showMessageDialog(null, "Jugador actualizado con exito.");
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				} finally {
@@ -203,7 +211,7 @@ public class FormularioJugador extends JFrame {
 						icono = new ImageIcon(nuevaResized);
 
 						lFoto.setIcon(icono);
-						
+
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -276,7 +284,7 @@ public class FormularioJugador extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 
 		rellenarCombo(comboBox_1);
-
+		System.out.println("Datos del jugador: " + jugador);
 		rellenarDatosJugador(jugador);
 
 	}
@@ -307,14 +315,14 @@ public class FormularioJugador extends JFrame {
 			// Obtenemos el puntero a vector de strings
 			String[] resultArray = (String[]) cs.getPlsqlIndexTable(2);
 
-			// Obtenemos la variable BLOB
+			// Obtenemos la variable BLOB y la pasamos a SerialBlob para
+			// trabajar con ella en JAVA
 			Blob fB = cs.getBlob(3);
-			fotoBLOB = new SerialBlob(fB.getBytes(1, (int) fB.length()));
-			
 
 			// Comprobamos si tiene una foto el jugador
 			// En caso afirmativo se muestra, sino se muestra un avatar
-			if (fotoBLOB != null) {
+			if (fB != null) {
+				fotoBLOB = new SerialBlob(fB.getBytes(1, (int) fB.length()));
 				byte[] imgData = null;
 				imgData = fotoBLOB.getBytes(1, (int) fotoBLOB.length());
 				ImageIcon imageIcon = new ImageIcon(imgData);
@@ -325,8 +333,8 @@ public class FormularioJugador extends JFrame {
 
 				lFoto.setIcon(imageIcon);
 
-				JOptionPane.showMessageDialog(null, null, "Imagen del Jugador", JOptionPane.INFORMATION_MESSAGE,
-						imageIcon);
+				// JOptionPane.showMessageDialog(null, null, "Imagen del
+				// Jugador", JOptionPane.INFORMATION_MESSAGE, imageIcon);
 			} else {
 				String path = "/images/avatar.png";
 
