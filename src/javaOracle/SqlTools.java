@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import oracle.jdbc.OracleCallableStatement;
+
 public class SqlTools {
 	
 	// El siguiente metodo prepara una llamada a procedimiento. Por ejemplo la llamada
@@ -19,10 +21,11 @@ public class SqlTools {
 	}
 	
 	
-	// El siguiente metodo cierra los recursos abiertos (ResultSet ,Statement ,Connection)
-	public static void close(ResultSet rs, Statement s, Connection c){
+	// El siguiente metodo cierra los recursos abiertos (ResultSet ,Statement ,OracleCallableStatement, Connection)
+	public static void close(ResultSet rs, Statement s,OracleCallableStatement os, Connection c){
 		try { if(rs!=null) rs.close();}catch(Exception e){e.printStackTrace();};
 		try { if(s!=null) s.close();}catch(Exception e){e.printStackTrace();};
+		try { if(os!=null) os.close();}catch(Exception e){e.printStackTrace();};		
 		try { if(c!=null) c.close();}catch(Exception e){e.printStackTrace();};		
 	}
 }

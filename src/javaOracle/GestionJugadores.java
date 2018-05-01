@@ -166,7 +166,7 @@ public class GestionJugadores extends JFrame {
 	        while(rs.next()){
 	        	comboBox.addItem(rs.getString("EQUIPO"));
 	        }
-	        SqlTools.close(rs, s, con);
+	        SqlTools.close(rs, s,null, con);
         
 		}catch(Exception e){
 			e.printStackTrace();        	
