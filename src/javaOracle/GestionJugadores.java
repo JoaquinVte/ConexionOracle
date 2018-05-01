@@ -19,36 +19,44 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollBar;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GestionJugadores extends JFrame {
 
 	private JPanel contentPane;
 	private JFrame ventanaPrincipal;
 	private JTable table;
+	private File f;
+	private JFrame frameAnterior;
+	private JFrame frameActual;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GestionJugadores frame = new GestionJugadores();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
+	
+
+	public JFrame getFrameActual() {
+		return frameActual;
 	}
+
+
+
+	public void setFrameActual(JFrame frameActual) {
+		this.frameActual = frameActual;
+	}
+
+
 
 	/**
 	 * Create the frame.
 	 */
-	public GestionJugadores() {
+	public GestionJugadores(File f) {
+		setTitle("Gestion de Jugadores");
+		
+		
+		
+		this.f=f;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 783, 433);
@@ -56,6 +64,8 @@ public class GestionJugadores extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(12, 12, 244, 24);
@@ -73,7 +83,7 @@ public class GestionJugadores extends JFrame {
 		        
 		        try{
 		        	
-		        	con = (new ConexionOracle()).Conectar();
+		        	con = (new ConexionOracle(f)).Conectar();
 		        	
 		        	cs = con.prepareCall(SqlTools.ConstruirLlamadaProcedimiento("prueba", "MOSTRAREQUIPO", 2));
 		        	
@@ -101,8 +111,8 @@ public class GestionJugadores extends JFrame {
 		            table.setModel(modelo);
 		            
 		        	
-		        }catch(Exception e1){
-		        	e1.printStackTrace();
+		        }catch(Exception e1){		        	
+		        	e1.printStackTrace();		        
 		        }
 		
 				
@@ -113,6 +123,13 @@ public class GestionJugadores extends JFrame {
 		contentPane.add(btnConsultar);
 		
 		JButton btnAtras = new JButton("Atras");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormularioPrincipal fp=new FormularioPrincipal();
+				fp.setVisible(true);
+				dispose();
+			}
+		});
 		btnAtras.setBounds(646, 363, 117, 25);
 		contentPane.add(btnAtras);
 		
@@ -121,10 +138,23 @@ public class GestionJugadores extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				DefaultTableModel tm = (DefaultTableModel) table.getModel();
+				
+				String jugador = String.valueOf(tm.getValueAt(table.getSelectedRow(),2));
+				frameActual.setVisible(false);
+				FormularioJugador fj=new FormularioJugador(jugador,f);
+				fj.setVisible(true);
+				fj.setFrameAnterior(frameActual);
+							
+			}
+		});
 		scrollPane.setViewportView(table);
 		
 		try{
-			ConexionOracle co=new ConexionOracle();
+			ConexionOracle co=new ConexionOracle(this.f);
 			
 	        Connection con = co.Conectar();
 	        String sql="SELECT EQUIPO FROM EQUIPOS";
@@ -139,8 +169,20 @@ public class GestionJugadores extends JFrame {
 	        SqlTools.close(rs, s, con);
         
 		}catch(Exception e){
-			e.printStackTrace();
+			e.printStackTrace();        	
 		}
 		
+	}
+
+
+
+	public JFrame getFrameAnterior() {
+		return frameAnterior;
+	}
+
+
+
+	public void setFrameAnterior(JFrame frame) {
+		this.frameAnterior = frame;
 	}
 }

@@ -1,5 +1,15 @@
 package javaOracle;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -14,84 +26,135 @@ import oracle.jdbc.OracleTypes;
  * @author PC-ORACLE
  */
 
+public class ConexionOracle {
 
-public class ConexionOracle{
-    
-    private Connection conexion;
+	private Connection conexion;
+	private String host;// = "192.168.1.42";
+	private String puerto;// = "1521";
+	private String usuario;// = "MUNDIAL";
+	private String password;// = "1234";
+	private File f;
 
-     public Connection getConexion() {
-        return conexion;
-    }
-     
+	public Connection getConexion() {
+		return conexion;
+	}
 
-   
-    public void setConexion(Connection conexion) {
-        this.conexion = conexion;
-    }
-    
-    public Connection Conectar()
-    {
-        try{
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            String BaseDeDatos = "jdbc:oracle:thin:@192.168.1.42:1521:ORCL";
-            conexion= DriverManager.getConnection(BaseDeDatos,"MUNDIAL","1234");
-            if(conexion!=null)
-                System.out.println("Conexión realizada con éxisto a MUNDIAL");
-            else
-                System.out.println("Conexión fallida");
-        }
-        catch(Exception e)
-            {System.out.println("FALLOOOOO EXCEPCION!!!"); e.printStackTrace();}
+	public ConexionOracle(File f) {
+		this.f = f;
+		try {
+			this.cargar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-        return conexion;
-    }
+	public String getHost() {
+		return host;
+	}
 
-    public void llenarDesplegable(String tabla, JComboBox desplegable, int posicionCampo, String colWhere, String valWhere)
-    {
-        try {
-                Connection con = null;
-                ResultSet rs = null;
-                CallableStatement cs = null;
-                ConexionOracle obconeccion=new ConexionOracle();
-                con=obconeccion.Conectar();
-                String sql;
-                if(colWhere==null)
-                    sql ="{?=call prueba.LLenar_Desplegables(?,?)}";
-                else
-                    sql ="{?=call prueba.LLenar_Desplegables(?,?,?,?)}";
-                cs = con.prepareCall(sql);
+	public void setHost(String host) {
+		this.host = host;
+	}
 
-            //String proc = SqlTools.buildProcedureCall("prueba", "busqPartidos", 5);
-            //cs = con.prepareCall(proc);
-                int pos = 0;
-            
-            // Cargamos los parametros de entrada IN
-                cs.registerOutParameter(++pos, OracleTypes.CURSOR);
-                cs.setString(++pos, tabla);  
-                cs.setInt(++pos, posicionCampo);
-                if(colWhere!=null)
-                {
-                    cs.setString(++pos, colWhere);  
-                    cs.setString(++pos, valWhere);                      
-                }
+	public String getPuerto() {
+		return puerto;
+	}
 
-                // Ejecutamos
-                cs.execute();
-            // Cosechamos los parametros de salida OUT
-            //resultado = cs.getInt(3);           // Nuestro number
-                rs = (ResultSet) cs.getObject(1);   // Nuestro cursor, convertido en ResultSet
-                desplegable.removeAllItems();
-                desplegable.addItem(null);
-                while(rs.next())
-                    desplegable.addItem(rs.getString(posicionCampo));
-//                desplEquipos.setModel(modeloLista);
-                SqlTools.close(rs, cs, con);
-        } catch (SQLException e) {
-             // TODO Auto-generated catch block
-             e.printStackTrace();
-         }
-    }    
-    
+	public void setPuerto(String puerto) {
+		this.puerto = puerto;
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public ConexionOracle(String host, String puerto, String usuario, String password, File f) {
+		super();
+		this.host = host;
+		this.puerto = puerto;
+		this.usuario = usuario;
+		this.password = password;
+		this.f = f;
+	}
+
+	public void setConexion(Connection conexion) {
+		this.conexion = conexion;
+	}
+
+	public Connection Conectar() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String BaseDeDatos = "jdbc:oracle:thin:@" + host + ":" + puerto + ":ORCL";
+			conexion = DriverManager.getConnection(BaseDeDatos, usuario, password);
+			if (conexion != null)
+				System.out.println("Conexión realizada con éxisto a MUNDIAL");
+			else {
+//				JOptionPane.showMessageDialog(null, "Error al conectar. Revise Configuracion", "Error",
+//						JOptionPane.ERROR_MESSAGE);
+				System.out.println("Conexión fallida");
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al conectar. Revise Configuracion", "Error",
+			JOptionPane.ERROR_MESSAGE);
+			//System.out.println("FALLOOOOO EXCEPCION!!!");
+			//e.printStackTrace();
+		}
+
+		return conexion;
+	}
+
+	public void setFile(File f) {
+		this.f = f;
+	}
+
+	public void guardar() throws FileNotFoundException, IOException {
+		ObjectOutputStream out = null;
+		try {
+			out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+
+			out.writeObject(host);
+			out.writeObject(puerto);
+			out.writeObject(usuario);
+			out.writeObject(password);
+
+		} catch (Exception e) {
+
+			System.out.print(e);
+
+		} finally {
+			out.close();
+		}
+	}
+
+	public void cargar() throws FileNotFoundException, IOException {
+		ObjectInputStream in = null;
+		try {
+			in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)));
+
+			this.host = (String) in.readObject();
+			this.puerto = (String) in.readObject();
+			this.usuario = (String) in.readObject();
+			this.password = (String) in.readObject();
+
+		} catch (EOFException e) {
+			System.out.println(e);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			in.close();
+		}
+	}
+
 }
-
-
