@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.Toolkit;
 
 public class FormularioPrincipal extends JFrame {
 
@@ -49,6 +50,7 @@ public class FormularioPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public FormularioPrincipal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FormularioPrincipal.class.getResource("/images/logo_compacto.png")));
 		setTitle("Formulario Principal");
 
 		ficheroBBDD = new File("./configuracion");

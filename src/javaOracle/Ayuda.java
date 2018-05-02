@@ -40,6 +40,7 @@ public class Ayuda extends JFrame {
 	 * Create the frame.
 	 */
 	public Ayuda() {
+		setTitle("OracleMundialJava v1.0");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 369, 348);
 		contentPane = new JPanel();
@@ -49,7 +50,7 @@ public class Ayuda extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("/home/joaalsai/workspace/Oracle/src/images/logo_compacto.png"));
+		lblNewLabel.setIcon(new ImageIcon(Ayuda.class.getResource("/images/logo_compacto.png")));
 		contentPane.add(lblNewLabel, "cell 0 0,grow");
 		
 		JLabel lblIesLaVereda = new JLabel("IES La Vereda");
