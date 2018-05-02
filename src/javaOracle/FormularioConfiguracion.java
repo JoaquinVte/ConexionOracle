@@ -9,16 +9,19 @@ import javax.swing.border.EmptyBorder;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class FormularioConfiguracion extends JFrame {
 
@@ -34,9 +37,13 @@ public class FormularioConfiguracion extends JFrame {
 	 * Create the frame.
 	 */
 	public FormularioConfiguracion(File ficheroBBDD) {
+		setTitle("Configuracion de la conexion");
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(FormularioConfiguracion.class.getResource("/images/logo_compacto.png")));
+		setResizable(false);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 254, 297);
+		setBounds(100, 100, 317, 297);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -72,27 +79,37 @@ public class FormularioConfiguracion extends JFrame {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				JOptionPane.showMessageDialog(null, "Configuracion Guardada.");
+
+				// Mensaje de confirmacion con logo
+				JFrame frm = new JFrame();
+				frm.setIconImage((new ImageIcon("./src/images/logo_compacto.png").getImage()));
+				frm.setBounds(100, 100, 100, 100);
+				
+
+				JOptionPane jp = new JOptionPane("Configuracion Guardada.", JOptionPane.INFORMATION_MESSAGE);
+				JDialog dialog = jp.createDialog(frm, "Aviso");
+				
+				dialog.setResizable(false);
+				dialog.setVisible(true);
+
+				
 				dispose();
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup().addContainerGap()
+		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup().addContainerGap()
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(lblServidor)
 								.addComponent(lblPuerto).addComponent(lblUsuario).addComponent(lblPassword))
 						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(btnGuardar)
 								.addComponent(tFPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)
 								.addComponent(tFUsuario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)
-								.addComponent(tFHost, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(tFPuerto, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(22, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-						.addContainerGap(75, Short.MAX_VALUE).addComponent(btnGuardar).addGap(69)));
+								.addComponent(tFPuerto, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+								.addComponent(tFHost, GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
+						.addContainerGap()));
 		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
 				.createSequentialGroup().addGap(30)
 				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblServidor).addComponent(

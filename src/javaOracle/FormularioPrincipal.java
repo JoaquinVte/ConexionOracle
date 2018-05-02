@@ -50,6 +50,7 @@ public class FormularioPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public FormularioPrincipal() {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FormularioPrincipal.class.getResource("/images/logo_compacto.png")));
 		setTitle("Formulario Principal");
 

@@ -46,6 +46,7 @@ import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Component;
+import java.awt.Toolkit;
 
 public class FormularioJugador extends JFrame {
 
@@ -69,6 +70,8 @@ public class FormularioJugador extends JFrame {
 	 * Create the frame.
 	 */
 	public FormularioJugador(String jugador, File f) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FormularioJugador.class.getResource("/images/logo_compacto.png")));
+		setResizable(false);
 		setTitle("Formulario Jugador");
 		this.f = f;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

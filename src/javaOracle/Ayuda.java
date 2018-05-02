@@ -30,6 +30,7 @@ import javax.swing.UIManager;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class Ayuda extends JFrame {
 
@@ -40,6 +41,8 @@ public class Ayuda extends JFrame {
 	 * Create the frame.
 	 */
 	public Ayuda() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Ayuda.class.getResource("/images/logo_compacto.png")));
+		setResizable(false);
 		setTitle("OracleMundialJava v1.0");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 369, 348);

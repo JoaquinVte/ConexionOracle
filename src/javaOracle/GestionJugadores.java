@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
 
 public class GestionJugadores extends JFrame {
 
@@ -52,6 +53,8 @@ public class GestionJugadores extends JFrame {
 	 * Create the frame.
 	 */
 	public GestionJugadores(File f) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GestionJugadores.class.getResource("/images/logo_compacto.png")));
+		setResizable(false);
 		setTitle("Gestion de Jugadores");
 		
 		
