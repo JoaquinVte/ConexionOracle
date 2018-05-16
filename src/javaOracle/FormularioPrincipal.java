@@ -23,6 +23,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Toolkit;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class FormularioPrincipal extends JFrame {
 
@@ -111,15 +112,38 @@ public class FormularioPrincipal extends JFrame {
 				dispose();
 			}
 		});
+		
+		JButton btnPrueba = new JButton("Prueba");
+		btnPrueba.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Prueba p =new Prueba(ficheroBBDD);
+				p.setVisible(true);
+				p.setFrame(frame);
+				frame.setVisible(false);
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(
-				Alignment.TRAILING,
-				gl_contentPane.createSequentialGroup().addContainerGap(90, Short.MAX_VALUE)
-						.addComponent(bGestionJugadores, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
-						.addGap(87)));
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(96, Short.MAX_VALUE)
+					.addComponent(bGestionJugadores, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
+					.addGap(87))
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addGap(106)
+					.addComponent(btnPrueba)
+					.addContainerGap(216, Short.MAX_VALUE))
+		);
 		gl_contentPane.setVerticalGroup(
-				gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane.createSequentialGroup()
-						.addContainerGap().addComponent(bGestionJugadores).addContainerGap(248, Short.MAX_VALUE)));
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(bGestionJugadores)
+					.addPreferredGap(ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+					.addComponent(btnPrueba)
+					.addGap(24))
+		);
 		contentPane.setLayout(gl_contentPane);
 	}
 }
