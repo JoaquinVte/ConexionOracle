@@ -23,6 +23,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Toolkit;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class FormularioPrincipal extends JFrame {
 
@@ -30,26 +31,13 @@ public class FormularioPrincipal extends JFrame {
 	private static JFrame frame;
 	private File ficheroBBDD;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					frame = new FormularioPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 */
 	public FormularioPrincipal() {
+		frame=this;
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FormularioPrincipal.class.getResource("/images/logo_compacto.png")));
 		setTitle("Formulario Principal");
@@ -85,10 +73,10 @@ public class FormularioPrincipal extends JFrame {
 			}
 		});
 		mnEditar.add(mIPreferencias);
-		
+
 		JMenu mnAyuda = new JMenu("Ayuda");
 		menuBar.add(mnAyuda);
-		
+
 		JMenuItem mntmAcercaDe = new JMenuItem("Acerca de");
 		mntmAcercaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -111,15 +99,34 @@ public class FormularioPrincipal extends JFrame {
 				dispose();
 			}
 		});
+
+		JButton btnNewButton = new JButton("Prueba");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Prueba p = new Prueba(ficheroBBDD);
+
+					p.setVisible(true);
+					p.setFrameAnterior(frame);
+					frame.setVisible(false);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(
-				Alignment.TRAILING,
-				gl_contentPane.createSequentialGroup().addContainerGap(90, Short.MAX_VALUE)
-						.addComponent(bGestionJugadores, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
-						.addGap(87)));
-		gl_contentPane.setVerticalGroup(
-				gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane.createSequentialGroup()
-						.addContainerGap().addComponent(bGestionJugadores).addContainerGap(248, Short.MAX_VALUE)));
+		gl_contentPane
+				.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup().addContainerGap(90, Short.MAX_VALUE)
+								.addComponent(bGestionJugadores, GroupLayout.PREFERRED_SIZE, 256,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(87))
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup().addGap(158)
+								.addComponent(btnNewButton).addContainerGap(158, Short.MAX_VALUE)));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup().addContainerGap().addComponent(bGestionJugadores)
+						.addPreferredGap(ComponentPlacement.RELATED, 190, Short.MAX_VALUE).addComponent(btnNewButton)
+						.addContainerGap()));
 		contentPane.setLayout(gl_contentPane);
 	}
 }

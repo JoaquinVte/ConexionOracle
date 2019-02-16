@@ -44,7 +44,7 @@ public class Ayuda extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Ayuda.class.getResource("/images/logo_compacto.png")));
 		setResizable(false);
 		setTitle("OracleMundialJava v1.0");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 369, 348);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

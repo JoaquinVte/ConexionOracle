@@ -337,7 +337,7 @@ public class FormularioJugador extends JFrame {
 			// Cargamos los parametros de entrada IN
 			os.setString(++pos, jugador);
 
-			// Registramos los parametro de salida OUT. El metodo
+			// Registramos los parametros de salida OUT. El metodo
 			// registerIndexTableOutParameter es propio de la clase
 			// OracleCallableStatement
 			os.registerIndexTableOutParameter(++pos, 5, OracleTypes.VARCHAR, 100);

@@ -88,7 +88,8 @@ public class GestionJugadores extends JFrame {
 		        	
 		        	con = (new ConexionOracle(f)).Conectar();
 		        	
-		        	cs = con.prepareCall(SqlTools.ConstruirLlamadaProcedimiento("prueba", "MOSTRAREQUIPO", 2));
+		        	// cs = con.prepareCall(SqlTools.ConstruirLlamadaProcedimiento("prueba", "MOSTRAREQUIPO", 2));
+		        	cs = con.prepareCall("{ call MOSTRAREQUIPOPRUEBA (?,?)}");
 		        	
 		        	int pos=0;
 		        	cs.setString(++pos, equipo);
@@ -116,6 +117,8 @@ public class GestionJugadores extends JFrame {
 		        	
 		        }catch(Exception e1){		        	
 		        	e1.printStackTrace();		        
+		        }finally{
+		        	SqlTools.close(rs, cs,null, con);
 		        }
 		
 				
