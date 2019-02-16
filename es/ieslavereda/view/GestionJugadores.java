@@ -1,7 +1,5 @@
-package javaOracle;
+package es.ieslavereda.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,12 +10,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import es.ieslavereda.tools.ConexionOracle;
+import es.ieslavereda.tools.SqlTools;
 import oracle.jdbc.OracleTypes;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.JScrollBar;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.event.ActionEvent;
@@ -28,8 +27,11 @@ import java.awt.Toolkit;
 
 public class GestionJugadores extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6818414690672375695L;
 	private JPanel contentPane;
-	private JFrame ventanaPrincipal;
 	private JTable table;
 	private File f;
 	private JFrame frameAnterior;
@@ -53,7 +55,7 @@ public class GestionJugadores extends JFrame {
 	 * Create the frame.
 	 */
 	public GestionJugadores(File f) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(GestionJugadores.class.getResource("/images/logo_compacto.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GestionJugadores.class.getResource("/es/ieslavereda/images/logo_compacto.png")));
 		setResizable(false);
 		setTitle("Gestion de Jugadores");
 		
@@ -70,7 +72,7 @@ public class GestionJugadores extends JFrame {
 		
 		
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(12, 12, 244, 24);
 		contentPane.add(comboBox);
 		

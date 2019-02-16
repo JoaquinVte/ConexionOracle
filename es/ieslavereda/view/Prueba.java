@@ -1,4 +1,4 @@
-package javaOracle;
+package es.ieslavereda.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import es.ieslavereda.tools.ConexionOracle;
 import oracle.jdbc.internal.OracleTypes;
 
 import javax.swing.JScrollPane;

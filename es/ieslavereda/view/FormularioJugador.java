@@ -1,10 +1,10 @@
-package javaOracle;
+package es.ieslavereda.view;
 
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+//import java.io.FileInputStream;
 import java.io.FileInputStream;
-
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Blob;
@@ -28,10 +28,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Dimension;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import es.ieslavereda.tools.ConexionOracle;
+import es.ieslavereda.tools.SqlTools;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 
@@ -50,6 +51,10 @@ import java.awt.Toolkit;
 
 public class FormularioJugador extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3361543426601763383L;
 	private JPanel contentPane;
 	private JTextField tFNombre;
 	private JTextField tFDireccion;
@@ -60,7 +65,7 @@ public class FormularioJugador extends JFrame {
 	private JRadioButton rdbtnDefensa;
 	private JRadioButton rdbtnMedio;
 	private JRadioButton rdbtnDelantero;
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	private FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo de imagen", "jpg");
 	private SerialBlob fotoBLOB;
 	private JFrame frameAnterior;
@@ -70,7 +75,7 @@ public class FormularioJugador extends JFrame {
 	 * Create the frame.
 	 */
 	public FormularioJugador(String jugador, File f) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FormularioJugador.class.getResource("/images/logo_compacto.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FormularioJugador.class.getResource("/es/ieslavereda/images/logo_compacto.png")));
 		setResizable(false);
 		setTitle("Formulario Jugador");
 		this.f = f;
@@ -96,7 +101,7 @@ public class FormularioJugador extends JFrame {
 
 		JLabel lblSeleccion = new JLabel("Seleccion");
 
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
 
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
@@ -199,9 +204,7 @@ public class FormularioJugador extends JFrame {
 				// Si hacemos click
 				if (opcion == JFileChooser.APPROVE_OPTION) {
 					try {
-						// Obtenenemos el nombre del fichero seleccionado
-						String nomFichero = fch.getSelectedFile().getPath();
-
+					
 						byte[] imgFoto = new byte[(int) fch.getSelectedFile().length()];
 						InputStream inte = new FileInputStream(fch.getSelectedFile());
 						inte.read(imgFoto);
@@ -370,7 +373,7 @@ public class FormularioJugador extends JFrame {
 				// JOptionPane.showMessageDialog(null, null, "Imagen del
 				// Jugador", JOptionPane.INFORMATION_MESSAGE, imageIcon);
 			} else {
-				String path = "/images/avatar.png";
+				String path = "/es/ieslavereda/images/avatar.png";
 
 				URL url = this.getClass().getResource(path);
 				ImageIcon icon = new ImageIcon(url);
@@ -428,7 +431,7 @@ public class FormularioJugador extends JFrame {
 	}
 
 	// Metodo para rellenar un Combo con las diferentes selecciones.
-	public void rellenarCombo(JComboBox comboBox) {
+	public void rellenarCombo(JComboBox<String> comboBox) {
 
 		Connection con = null;
 		Statement s = null;

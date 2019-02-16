@@ -1,4 +1,4 @@
-package javaOracle;
+package es.ieslavereda.view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,7 +27,7 @@ public class FormularioPrincipal extends JFrame {
 	public FormularioPrincipal() {
 		frame = this;
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FormularioPrincipal.class.getResource("/images/logo_compacto.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FormularioPrincipal.class.getResource("/es/ieslavereda/images/logo_compacto.png")));
 		setTitle("Formulario Principal");
 
 		ficheroBBDD = new File("./configuracion");

@@ -1,7 +1,8 @@
-package principal;
+package es.ieslavereda.principal;
 
 import java.awt.EventQueue;
-import javaOracle.FormularioPrincipal;
+
+import es.ieslavereda.view.FormularioPrincipal;
 
 public class Principal {
 

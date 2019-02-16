@@ -1,4 +1,4 @@
-package javaOracle;
+package es.ieslavereda.tools;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
