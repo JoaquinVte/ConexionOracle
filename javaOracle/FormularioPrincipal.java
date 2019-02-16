@@ -1,15 +1,9 @@
 package javaOracle;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;
@@ -33,8 +27,7 @@ public class FormularioPrincipal extends JFrame {
 	public FormularioPrincipal() {
 		frame = this;
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(FormularioPrincipal.class.getResource("/images/logo_compacto.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FormularioPrincipal.class.getResource("/images/logo_compacto.png")));
 		setTitle("Formulario Principal");
 
 		ficheroBBDD = new File("./configuracion");
