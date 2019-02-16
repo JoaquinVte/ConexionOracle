@@ -6,11 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JButton;
-import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -31,15 +27,14 @@ public class FormularioPrincipal extends JFrame {
 	private static JFrame frame;
 	private File ficheroBBDD;
 
-
-
 	/**
 	 * Create the frame.
 	 */
 	public FormularioPrincipal() {
-		frame=this;
+		frame = this;
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FormularioPrincipal.class.getResource("/images/logo_compacto.png")));
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(FormularioPrincipal.class.getResource("/images/logo_compacto.png")));
 		setTitle("Formulario Principal");
 
 		ficheroBBDD = new File("./configuracion");
@@ -100,9 +95,8 @@ public class FormularioPrincipal extends JFrame {
 			}
 		});
 
-
-		JButton btnNewButton = new JButton("Prueba");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnPrueba = new JButton("Prueba");
+		btnPrueba.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Prueba p = new Prueba(ficheroBBDD);
@@ -113,19 +107,9 @@ public class FormularioPrincipal extends JFrame {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-
-		
-		JButton btnPrueba = new JButton("Prueba");
-		btnPrueba.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				Prueba p =new Prueba(ficheroBBDD);
-				p.setVisible(true);
-				p.setFrame(frame);
-				frame.setVisible(false);
-
 			}
 		});
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 
 		gl_contentPane
@@ -135,32 +119,11 @@ public class FormularioPrincipal extends JFrame {
 										GroupLayout.PREFERRED_SIZE)
 								.addGap(87))
 						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup().addGap(158)
-								.addComponent(btnNewButton).addContainerGap(158, Short.MAX_VALUE)));
+								.addComponent(btnPrueba).addContainerGap(158, Short.MAX_VALUE)));
 		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup().addContainerGap().addComponent(bGestionJugadores)
-						.addPreferredGap(ComponentPlacement.RELATED, 190, Short.MAX_VALUE).addComponent(btnNewButton)
+						.addPreferredGap(ComponentPlacement.RELATED, 190, Short.MAX_VALUE).addComponent(btnPrueba)
 						.addContainerGap()));
-
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(96, Short.MAX_VALUE)
-					.addComponent(bGestionJugadores, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
-					.addGap(87))
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-					.addGap(106)
-					.addComponent(btnPrueba)
-					.addContainerGap(216, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(bGestionJugadores)
-					.addPreferredGap(ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
-					.addComponent(btnPrueba)
-					.addGap(24))
-		);
 
 		contentPane.setLayout(gl_contentPane);
 	}
