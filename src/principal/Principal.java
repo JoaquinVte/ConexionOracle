@@ -1,13 +1,10 @@
 package principal;
 
 import java.awt.EventQueue;
-
 import javaOracle.FormularioPrincipal;
 
-public class Main {
-	/**
-	 * Launch the application.
-	 */
+public class Principal {
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
