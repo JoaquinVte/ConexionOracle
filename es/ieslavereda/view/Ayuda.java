@@ -28,7 +28,7 @@ public class Ayuda extends JFrame {
 	 * Create the frame.
 	 */
 	public Ayuda() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Ayuda.class.getResource("/images/logo_compacto.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Ayuda.class.getResource("/es/ieslavereda/images/logo_compacto.png")));
 		setResizable(false);
 		setTitle("OracleMundialJava v1.0");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,7 +40,7 @@ public class Ayuda extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(Ayuda.class.getResource("/images/logo_compacto.png")));
+		lblNewLabel.setIcon(new ImageIcon(Ayuda.class.getResource("/es/ieslavereda/images/logo_compacto.png")));
 		contentPane.add(lblNewLabel, "cell 0 0,grow");
 		
 		JLabel lblIesLaVereda = new JLabel("IES La Vereda");
@@ -50,7 +50,7 @@ public class Ayuda extends JFrame {
 		JLabel lblJoaquinVicenteAlonso = new JLabel("Joaquin Vicente Alonso Saiz");
 		contentPane.add(lblJoaquinVicenteAlonso, "cell 0 3,alignx center");
 		
-		JLabel lblCurso = new JLabel("Curso 2017 / 2018");
+		JLabel lblCurso = new JLabel("Curso 2019 / 2020");
 		contentPane.add(lblCurso, "cell 0 4,alignx center");
 		
 		JTextPane txtpnOasdfsd = new JTextPane();

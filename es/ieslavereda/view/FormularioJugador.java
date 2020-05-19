@@ -115,7 +115,7 @@ public class FormularioJugador extends JFrame {
 					ConexionOracle obconeccion = new ConexionOracle(f);
 					con = obconeccion.Conectar();
 
-					String sql = "call prueba.grabarJugador2(?,?,?,?,?,?)";
+					String sql = "call prueba.grabarJugador(?,?,?,?,?,?)";
 					os = (OracleCallableStatement) con.prepareCall(sql);
 
 					int pos = 0;
@@ -329,7 +329,7 @@ public class FormularioJugador extends JFrame {
 	public void rellenarDatosJugador(String jugador) {
 
 		Connection con = (new ConexionOracle(f)).Conectar();
-		String sql = SqlTools.ConstruirLlamadaProcedimiento("PRUEBA", "obtener_jugador2", 3);
+		String sql = SqlTools.ConstruirLlamadaProcedimiento("PRUEBA", "obtener_jugador", 3);
 		OracleCallableStatement os = null;
 
 		try {

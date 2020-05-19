@@ -89,7 +89,7 @@ public class ConexionOracle {
 	public Connection Conectar() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			String BaseDeDatos = "jdbc:oracle:thin:@" + host + ":" + puerto + ":ORCL";
+			String BaseDeDatos = "jdbc:oracle:thin:@" + host + ":" + puerto + ":XE";
 			conexion = DriverManager.getConnection(BaseDeDatos, usuario, password);
 			if (conexion != null)
 				System.out.println("Conexión realizada con éxisto a MUNDIAL");

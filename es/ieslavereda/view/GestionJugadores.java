@@ -91,7 +91,7 @@ public class GestionJugadores extends JFrame {
 		        	con = (new ConexionOracle(f)).Conectar();
 		        	
 		        	// cs = con.prepareCall(SqlTools.ConstruirLlamadaProcedimiento("prueba", "MOSTRAREQUIPO", 2));
-		        	cs = con.prepareCall("{ call MOSTRAREQUIPOPRUEBA (?,?)}");
+		        	cs = con.prepareCall("{ call MOSTRAR_EQUIPO (?,?)}");
 		        	
 		        	int pos=0;
 		        	cs.setString(++pos, equipo);

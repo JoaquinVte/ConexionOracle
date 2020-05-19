@@ -40,7 +40,7 @@ public class FormularioConfiguracion extends JFrame {
 	public FormularioConfiguracion(File ficheroBBDD) {
 		setTitle("Configuracion de la conexion");
 		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(FormularioConfiguracion.class.getResource("/images/logo_compacto.png")));
+				.getImage(FormularioConfiguracion.class.getResource("/es/ieslavereda/images/logo_compacto.png")));
 		setResizable(false);
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
