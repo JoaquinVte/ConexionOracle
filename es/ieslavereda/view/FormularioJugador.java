@@ -329,7 +329,10 @@ public class FormularioJugador extends JFrame {
 	public void rellenarDatosJugador(String jugador) {
 
 		Connection con = (new ConexionOracle(f)).Conectar();
+		
+		//String sql= "{ call PRUEBA.obtener_jugador(?,?,?)}";
 		String sql = SqlTools.ConstruirLlamadaProcedimiento("PRUEBA", "obtener_jugador", 3);
+		
 		OracleCallableStatement os = null;
 
 		try {
@@ -339,6 +342,7 @@ public class FormularioJugador extends JFrame {
 
 			// Cargamos los parametros de entrada IN
 			os.setString(++pos, jugador);
+			//os.setString(++pos, "inventado");
 
 			// Registramos los parametros de salida OUT. El metodo
 			// registerIndexTableOutParameter es propio de la clase
@@ -424,7 +428,8 @@ public class FormularioJugador extends JFrame {
 			System.out.println((fotoBLOB != null) ? "Tiene una Foto" : "Sin foto");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//			e.printStackTrace();
 		} finally {
 			SqlTools.close(null, null,os, con);
 		}

@@ -91,7 +91,9 @@ public class GestionJugadores extends JFrame {
 		        	con = (new ConexionOracle(f)).Conectar();
 		        	
 		        	// cs = con.prepareCall(SqlTools.ConstruirLlamadaProcedimiento("prueba", "MOSTRAREQUIPO", 2));
-		        	cs = con.prepareCall("{ call MOSTRAR_EQUIPO (?,?)}");
+		        	
+		        	String sql = "{ call MOSTRAR_EQUIPO (?,?)}";
+		        	cs = con.prepareCall(sql);
 		        	
 		        	int pos=0;
 		        	cs.setString(++pos, equipo);
@@ -121,10 +123,7 @@ public class GestionJugadores extends JFrame {
 		        	e1.printStackTrace();		        
 		        }finally{
 		        	SqlTools.close(rs, cs,null, con);
-		        }
-		
-				
-				
+		        }			
 			}
 		});
 		btnConsultar.setBounds(268, 12, 117, 25);
