@@ -15,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -48,6 +50,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 import java.awt.Toolkit;
+import com.github.lgooddatepicker.components.DatePicker;
 
 public class FormularioJugador extends JFrame {
 
@@ -58,7 +61,6 @@ public class FormularioJugador extends JFrame {
 	private JPanel contentPane;
 	private JTextField tFNombre;
 	private JTextField tFDireccion;
-	private JTextField tFFechaNacimiento;
 	private File f;
 	private JLabel lFoto;
 	private JRadioButton rdbtnPortero;
@@ -70,6 +72,7 @@ public class FormularioJugador extends JFrame {
 	private SerialBlob fotoBLOB;
 	private JFrame frameAnterior;
 	private int fotoWidth=620, fotoHeight=480;
+	private DatePicker dPFechaNacimiento;
 
 	/**
 	 * Create the frame.
@@ -115,7 +118,7 @@ public class FormularioJugador extends JFrame {
 					ConexionOracle obconeccion = new ConexionOracle(f);
 					con = obconeccion.Conectar();
 
-					String sql = "call prueba.grabarJugador(?,?,?,?,?,?)";
+					String sql = "call prueba.grabarJugador2(?,?,?,?,?,?)";
 					os = (OracleCallableStatement) con.prepareCall(sql);
 
 					int pos = 0;
@@ -136,18 +139,19 @@ public class FormularioJugador extends JFrame {
 					else if (rdbtnDelantero.isSelected())
 						os.setString(++pos, "DL");
 
-					java.sql.Date fecha = null;
-					try {
-						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-						java.util.Date d;
+					java.sql.Date fecha = java.sql.Date.valueOf(dPFechaNacimiento.getDate());
+					//try {
+//						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//						java.util.Date d;
+//
+//						d = (java.util.Date) sdf.parse(tFFechaNacimiento.getText());
+//						long milliseconds = d.getTime();
 
-						d = (java.util.Date) sdf.parse(tFFechaNacimiento.getText());
-						long milliseconds = d.getTime();
-
-						fecha = new Date(milliseconds);
-					} catch (ParseException e1) {
-						e1.printStackTrace();
-					}
+						//fecha = new Date(milliseconds);
+						//fecha = dPFechaNacimiento.
+//					} catch (ParseException e1) {
+//						//e1.printStackTrace();
+//					}
 
 					os.setDate(++pos, fecha);
 							
@@ -237,15 +241,14 @@ public class FormularioJugador extends JFrame {
 
 		tFDireccion = new JTextField();
 		tFDireccion.setColumns(10);
-
-		tFFechaNacimiento = new JTextField();
-		tFFechaNacimiento.setColumns(10);
+		
+		dPFechaNacimiento = new DatePicker();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblPuestoHabitual)
@@ -255,20 +258,22 @@ public class FormularioJugador extends JFrame {
 								.addComponent(lblFechaNacimiento))
 							.addGap(32)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(rdbtnPortero)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(rdbtnDefensa)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(rdbtnMedio)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(rdbtnDelantero))
-								.addComponent(tFDireccion, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
-								.addComponent(tFFechaNacimiento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(tFNombre, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE))
-							.addGap(49))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+										.addGroup(gl_contentPane.createSequentialGroup()
+											.addComponent(rdbtnPortero)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(rdbtnDefensa)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(rdbtnMedio)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(rdbtnDelantero))
+										.addComponent(tFDireccion, GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+										.addComponent(tFNombre, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE))
+									.addGap(49))
+								.addComponent(dPFechaNacimiento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnGuardar)
 							.addGap(167)
 							.addComponent(btnAtras)))
@@ -276,9 +281,9 @@ public class FormularioJugador extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(49)
 					.addComponent(lFoto, GroupLayout.PREFERRED_SIZE, 558, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(49, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(276, Short.MAX_VALUE)
+					.addContainerGap(57, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(286, Short.MAX_VALUE)
 					.addComponent(btnSubirFoto)
 					.addGap(273))
 		);
@@ -299,8 +304,8 @@ public class FormularioJugador extends JFrame {
 						.addComponent(tFDireccion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(tFFechaNacimiento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblFechaNacimiento))
+						.addComponent(lblFechaNacimiento)
+						.addComponent(dPFechaNacimiento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblPuestoHabitual)
@@ -331,7 +336,7 @@ public class FormularioJugador extends JFrame {
 		Connection con = (new ConexionOracle(f)).Conectar();
 		
 		//String sql= "{ call PRUEBA.obtener_jugador(?,?,?)}";
-		String sql = SqlTools.ConstruirLlamadaProcedimiento("PRUEBA", "obtener_jugador", 3);
+		String sql = SqlTools.ConstruirLlamadaProcedimiento("PRUEBA", "obtener_jugador2", 3);
 		
 		OracleCallableStatement os = null;
 
@@ -414,9 +419,12 @@ public class FormularioJugador extends JFrame {
 				break;
 			}
 
-			if (resultArray[3] != null)
-				tFFechaNacimiento.setText(resultArray[3]);
-
+			if (resultArray[3] != null) {
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				dPFechaNacimiento.setDate(LocalDate.parse(resultArray[3],formatter));
+			}
+			
+			
 			comboBox.setSelectedItem(resultArray[4]);
 
 			// Mostramos por consola los datos para comprobar.
@@ -469,5 +477,4 @@ public class FormularioJugador extends JFrame {
 	public void setFrameAnterior(JFrame frameAnterior) {
 		this.frameAnterior = frameAnterior;
 	}
-
 }

@@ -90,10 +90,10 @@ public class GestionJugadores extends JFrame {
 		        	
 		        	con = (new ConexionOracle(f)).Conectar();
 		        	
-		        	// cs = con.prepareCall(SqlTools.ConstruirLlamadaProcedimiento("prueba", "MOSTRAREQUIPO", 2));
+		        	 cs = con.prepareCall(SqlTools.ConstruirLlamadaProcedimiento("prueba", "MOSTRAREQUIPO", 2));
 		        	
-		        	String sql = "{ call MOSTRAR_EQUIPO (?,?)}";
-		        	cs = con.prepareCall(sql);
+		        	//String sql = "{ call MOSTRAREQUIPO (?,?)}";
+		        	//cs = con.prepareCall(sql);
 		        	
 		        	int pos=0;
 		        	cs.setString(++pos, equipo);
@@ -108,6 +108,7 @@ public class GestionJugadores extends JFrame {
 		            
 		            DefaultTableModel modelo = new DefaultTableModel(null, Titulos);
 		            
+		            
 		            while (rs.next()) {        
 		                fila[0] = rs.getString("N1");
 		                fila[1] = rs.getString("C2");
@@ -118,6 +119,8 @@ public class GestionJugadores extends JFrame {
 
 		            table.setModel(modelo);
 		            
+		            table.getColumnModel().getColumn(0).setMaxWidth(75);
+		            table.getColumnModel().getColumn(1).setMaxWidth(75);
 		        	
 		        }catch(Exception e1){		        	
 		        	e1.printStackTrace();		        
